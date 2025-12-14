@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hayvan Sesleri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .animal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    .animal {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .animal:hover {
+      transform: scale(1.08);
+    }
+    .animal img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #3498db;
+      background-color: #fff;
+    }
+    .animal p {
+      margin-top: 5px;
+      font-weight: bold;
+      color: #2c3e50;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hayvan Seslerine Tıkla!</h1>
+  <div class="animal-grid" id="animalContainer">
+    <!-- Hayvanlar buraya JavaScript ile eklenecek -->
+  </div>
+
+  <audio id="animalSound" preload="none"></audio>
+
+  <script>
+    const hayvanlar = [
+      "inek", "kopek", "kedi", "tavuk", "horoz", "ordek",
+      "keci", "kuzu", "at", "esek", "baykus", "aslan",
+      "kurbaga", "ari", "kus"
+    ];
+
+    const turkceIsimler = {
+      inek: "İNEK",
+      kopek: "KÖPEK",
+      kedi: "KEDİ",
+      tavuk: "TAVUK",
+      horoz: "HOROZ",
+      ordek: "ÖRDEK",
+      keci: "KEÇİ",
+      kuzu: "KUZU",
+      at: "AT",
+      esek: "EŞEK",
+      baykus: "BAYKUŞ",
+      aslan: "ASLAN",
+      kurbaga: "KURBAĞA",
+      ari: "ARI",
+      kus: "KUŞ"
+    };
+
+    const container = document.getElementById("animalContainer");
+    const audioPlayer = document.getElementById("animalSound");
+
+    hayvanlar.forEach(hayvan => {
+      const div = document.createElement("div");
+      div.className = "animal";
+      div.innerHTML = `
+        <img src="images/${hayvan}.png" alt="${turkceIsimler[hayvan]}">
+        <p>${turkceIsimler[hayvan]}</p>
+      `;
+      div.addEventListener("click", () => {
+        audioPlayer.src = `sounds/${hayvan}.mp3`;
+        audioPlayer.play().catch(e => console.warn("Ses oynatılamadı:", e));
+      });
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>
